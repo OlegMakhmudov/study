@@ -1,0 +1,36 @@
+It's just the description of Strategy Pattern!
+
+Позволяет нам изменять поведение алгоритма во время выполнения!
+
+Для решения проблемы мы можем отделить поведение класса от самого класса!
+
+Обычно мы начинаем с интерфейса, который используется для применения алгоритма,
+а затем реализуем его несколько раз для каждого возможного алгоритма.
+
+Допустим, у нас есть требование применять различные типы скидок к покупке в зависимости от того,
+Рождество это, Пасха или Новый год.
+
+Сначала создаем интерфейс Дискаунтер, и два класса которые будут его имплементирововать,
+делая различную скидку для клиентов в зависимости от праздника.
+
+Тогда предположим, что мы хотим применить скидку 50% на Пасху и скидку 10% на Рождество.
+
+Сделать все скидки в одном классе с помощью унарного оператора.
+extends UnaryOperator<BigDecimal> {
+
+default Discounter combine(Discounter after) {
+        return value -> after.apply(this.apply(value));
+    }
+
+    static Discounter christmas() {
+        return (amount) -> amount.multiply(BigDecimal.valueOf(0.9));
+    }
+
+    static Discounter newYear() {
+        return (amount) -> amount.multiply(BigDecimal.valueOf(0.8));
+    }
+
+    static Discounter easter() {
+        return (amount) -> amount.multiply(BigDecimal.valueOf(0.5));
+    }
+
